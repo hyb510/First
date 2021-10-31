@@ -1,0 +1,74 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <iostream>
+#define FLUSH	while (getchar() != '\n')
+using namespace std;
+
+void Display()
+{
+	printf("=======================\n");
+	printf("        关机程序\n");
+	printf("*1.自定义时间关机\n");
+	printf("*2.关机\n");
+	printf("*3.重启\n");
+	printf("*4.注销\n");
+	printf("*5.取消关机指令\n");
+	printf("*0.退出系统\n");
+}
+
+void SetTitle()
+{
+	system("title C关机程序");
+	system("mode con cols=48 lines=15");
+	system("color 0B");
+	system("DATE /T");
+	system("TIME /T");
+}
+
+void OutCmd()
+{
+	int i = 0, j = 0;
+	while (1)
+	{
+		printf("请输入操作指令(0-5):");
+		scanf_s(" %d", &i);
+		FLUSH;
+		switch (i)
+		{
+		case 1:
+			{
+				printf("\n==========================\n");
+				printf("*1.一小时后关机\n");
+				printf("*2.两小时后关机\n");
+				printf("*0.返回上一级\n");
+				printf("==========================\n");
+				printf("请输入操作指令(0-2):");
+				scanf_s(" %d", &j);
+				FLUSH;
+				switch (j)
+				{
+				case 1:system("shutdown -s -t 3600"); break;
+				case 2:system("shutdown -s -t 7200"); break;
+				case 0:break;
+				default:printf("输入错误！请重新输入!\n"); break;
+				}
+			}
+			break;
+		case 2:	system("shutdown -p"); break;
+		case 3: system("shutdown -r -t 0"); break;
+		case 4: system("shutdown -l");	//注销
+		case 5: system("shutdown -a");
+		case 0: exit(0); break;
+		default: printf("输入错误！请重新输入!\n"); break;
+		}
+	}
+}
+
+int main(void)
+{
+	SetTitle();
+	Display();
+	OutCmd();
+	system("pause");
+}
